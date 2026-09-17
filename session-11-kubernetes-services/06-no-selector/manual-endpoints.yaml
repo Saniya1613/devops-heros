@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: external-legacy-db
+subsets:
+  - addresses:
+      - ip: 192.168.1.150
+    ports:
+      - port: 3306

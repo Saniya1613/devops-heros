@@ -1,0 +1,11 @@
+# busybox provides nslookup but has no TLS-capable curl, so traffic through the
+# alias is tested from a second client pod built on the curl image.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: externalname-curl-client
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl:8.10.1
+      command: ["sleep", "3600"]
