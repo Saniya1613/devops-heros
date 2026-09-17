@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lifecycle-image-error
+spec:
+  containers:
+    - name: app
+      image: nginx:this-tag-does-not-exist-9999

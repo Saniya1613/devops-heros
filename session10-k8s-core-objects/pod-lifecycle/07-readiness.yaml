@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lifecycle-readiness
+spec:
+  containers:
+    - name: app
+      image: nginx:1.25-alpine
+      ports:
+        - containerPort: 80
+      readinessProbe:
+        exec:
+          command: ["sh", "-c", "test -f /tmp/ready"]
+        initialDelaySeconds: 3
+        periodSeconds: 5

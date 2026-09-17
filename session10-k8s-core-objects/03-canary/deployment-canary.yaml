@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: canary-html-canary
+data:
+  index.html: |
+    <html><body><p>CANARY v2</p></body></html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp-canary
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: myapp-canary
+        track: canary
+        version: v2
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.25-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: html
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: html
+          configMap:
+            name: canary-html-canary

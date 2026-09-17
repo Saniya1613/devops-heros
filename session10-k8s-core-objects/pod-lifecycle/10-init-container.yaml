@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lifecycle-init
+spec:
+  initContainers:
+    - name: setup
+      image: busybox:1.36
+      command: ["sh", "-c", "echo 'pre-flight: seeding config'; sleep 8; echo 'seed complete'"]
+  containers:
+    - name: app
+      image: nginx:1.25-alpine
+      ports:
+        - containerPort: 80

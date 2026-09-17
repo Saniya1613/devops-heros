@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lifecycle-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+    - name: batch
+      image: busybox:1.36
+      command: ["sh", "-c", "echo 'job done'; exit 0"]
