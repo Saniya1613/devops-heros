@@ -1,0 +1,13 @@
+# The SAME application built WITHOUT multi-stage, for size comparison.
+# The Go toolchain, module cache and source all remain in the final image.
+FROM golang:1.22-alpine
+
+WORKDIR /src
+COPY go.mod ./
+RUN go mod download
+COPY main.go ./
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /out/server main.go
+
+ENV PORT=8080
+EXPOSE 8080
+ENTRYPOINT ["/out/server"]

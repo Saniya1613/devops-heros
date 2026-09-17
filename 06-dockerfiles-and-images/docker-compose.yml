@@ -1,0 +1,36 @@
+# Three different application types deployed together with one command.
+# Images are built from the Dockerfiles in ../05-docker-fundamentals/.
+services:
+
+  # 1. Static site — nginx serving HTML, no application runtime at all
+  web:
+    build: ../05-docker-fundamentals/nginx-app
+    image: hello-nginx:1.0
+    container_name: stack-web
+    ports:
+      - "8091:80"
+    restart: unless-stopped
+
+  # 2. Interpreted app — Python, source shipped and run in place
+  api:
+    build: ../05-docker-fundamentals/python-app
+    image: hello-python:1.0
+    container_name: stack-api
+    ports:
+      - "8092:5000"
+    environment:
+      PORT: "5000"
+    restart: unless-stopped
+
+  # 3. Compiled app — Go, built multi-stage into a scratch image
+  service:
+    build:
+      context: ./multistage-go
+      dockerfile: Dockerfile
+    image: multistage-demo:slim
+    container_name: stack-service
+    ports:
+      - "8093:8080"
+    environment:
+      PORT: "8080"
+    restart: unless-stopped
