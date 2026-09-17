@@ -1,0 +1,11 @@
+# TLS material generated during Session 12, Task 13 — never commit private keys
+tls.key
+tls.crt
+*.pem
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
